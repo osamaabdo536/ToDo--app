@@ -12,6 +12,7 @@ class TaskEdit extends StatefulWidget {
 
 class _TaskEditState extends State<TaskEdit> {
   DateTime selectedDate = DateTime.now();
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppConfigProvider>(context);
@@ -34,74 +35,76 @@ class _TaskEditState extends State<TaskEdit> {
               MyTheme.darkBlackColor
               :MyTheme.whiteColor,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text('Edit Task' ,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                validator: (text){
-                  if(text == null || text.isEmpty){
-                    return AppLocalizations.of(context)!.enter_title;
-                  }
-                  return null ;
-                },
-                decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.task_title,
-                  hintStyle: TextStyle(
-                    color: provider.isDarkMode()
-                        ? MyTheme.whiteColor
-                        : MyTheme.blackColor,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text('Edit Task' ,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  validator: (text){
+                    if(text == null || text.isEmpty){
+                      return AppLocalizations.of(context)!.enter_title;
+                    }
+                    return null ;
+                  },
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.task_title,
+                    hintStyle: TextStyle(
+                      color: provider.isDarkMode()
+                          ? MyTheme.whiteColor
+                          : MyTheme.blackColor,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                validator: (text){
-                  if(text == null || text.isEmpty){
-                    return AppLocalizations.of(context)!.enter_details;
-                  }
-                  return null ;
-                },
-                decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.task_details,
-                  hintStyle: TextStyle(
-                    color: provider.isDarkMode()
-                        ? MyTheme.whiteColor
-                        : MyTheme.blackColor,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  validator: (text){
+                    if(text == null || text.isEmpty){
+                      return AppLocalizations.of(context)!.enter_details;
+                    }
+                    return null ;
+                  },
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.task_details,
+                    hintStyle: TextStyle(
+                      color: provider.isDarkMode()
+                          ? MyTheme.whiteColor
+                          : MyTheme.blackColor,
+                    ),
                   ),
+                  maxLength: 4,
                 ),
-                maxLength: 4,
               ),
-            ),
-            Text(AppLocalizations.of(context)!.select_date ,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            InkWell(
-                onTap: (){
-                  showCalender();
+              Text(AppLocalizations.of(context)!.select_date ,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              InkWell(
+                  onTap: (){
+                    showCalender();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('${selectedDate.day}/${selectedDate.month}/${selectedDate.year}' ,
+                      style: Theme.of(context).textTheme.titleSmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: (){
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('${selectedDate.day}/${selectedDate.month}/${selectedDate.year}' ,
-                    style: Theme.of(context).textTheme.titleSmall,
-                    textAlign: TextAlign.center,
-                  ),
-                )
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: (){
-              },
-              child: Text(AppLocalizations.of(context)!.save_changes , style: Theme.of(context).textTheme.titleLarge,),
-            ),
-          ],
+                child: Text(AppLocalizations.of(context)!.save_changes , style: Theme.of(context).textTheme.titleLarge,),
+              ),
+            ],
+          ),
         ),
       ),
     );
