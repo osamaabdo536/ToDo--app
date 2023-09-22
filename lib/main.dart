@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/home/home_screen.dart';
 import 'package:flutter_todo_app/my_theme.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_todo_app/providers/app_config_provider.dart';
+import 'package:flutter_todo_app/task_list/task_edit.dart';
+import 'package:provider/provider.dart';
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => AppConfigProvider(),
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: HomeScreen.routeName,
       routes: {
         HomeScreen.routeName : (context) => HomeScreen(),
+        TaskEdit.routeName : (context) => TaskEdit(),
       },
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: MyTheme.lightTheme,
+      locale: Locale(provider.appLanguage),
+      themeMode: provider.appTheme,
+      darkTheme: MyTheme.darkTheme,
     );
   }
 }

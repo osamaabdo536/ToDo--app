@@ -1,6 +1,7 @@
-import 'package:calendar_agenda/calendar_agenda.dart';
+import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/my_theme.dart';
+import 'package:flutter_todo_app/task_list/task_edit.dart';
 import 'package:flutter_todo_app/task_list/task_widget.dart';
 
 class TaskListTab extends StatelessWidget {
@@ -8,18 +9,29 @@ class TaskListTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CalendarAgenda(
+        CalendarTimeline(
           initialDate: DateTime.now(),
           firstDate: DateTime.now().subtract(Duration(days: 365)),
           lastDate: DateTime.now().add(Duration(days: 365)),
-          onDateSelected: (date) {
-            print(date);
-          },
+          onDateSelected: (date) => print(date),
+          leftMargin: 20,
+          monthColor: MyTheme.blackColor,
+          dayColor: MyTheme.blackColor,
+          activeDayColor: MyTheme.whiteColor,
+          activeBackgroundDayColor: Theme.of(context).primaryColor,
+          dotsColor: MyTheme.whiteColor,
+          selectableDayPredicate: (date) => true,
+          locale: 'en_ISO',
         ),
         Expanded(
           child: ListView.builder(
               itemBuilder: (context,index){
-                return TaskWidget();
+                return InkWell(
+                  onTap: (){
+                    Navigator.of(context).pushNamed(TaskEdit.routeName);
+                  },
+                    child: TaskWidget()
+                );
               },
             itemCount: 20,
           ),

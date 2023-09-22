@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/my_theme.dart';
+import 'package:flutter_todo_app/providers/app_config_provider.dart';
 import 'package:flutter_todo_app/settings/settings.dart';
 import 'package:flutter_todo_app/task_list/add_bottom_shett.dart';
 import 'package:flutter_todo_app/task_list/task_list.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'HomeScreen';
 
@@ -16,10 +18,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'ToDo List',
+          AppLocalizations.of(context)!.app_title,
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
@@ -35,9 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Task-List'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: 'Settings'),
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: AppLocalizations.of(context)!.task_list),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: AppLocalizations.of(context)!.settings),
           ],
         ),
       ),
@@ -48,7 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
         shape: StadiumBorder(
           side: BorderSide(
             width: 6,
-            color: MyTheme.whiteColor,
+            color: provider.isDarkMode()?
+                MyTheme.darkBlackColor
+            :MyTheme.whiteColor,
           ),
         ),
         child: Icon(

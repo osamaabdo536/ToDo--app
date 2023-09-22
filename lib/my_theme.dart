@@ -10,10 +10,10 @@ class MyTheme{
   static Color redColor = Color(0xffEC4B4B);
   static Color greyColor = Color(0xffC8C9CB);
   static Color darkBlackColor = Color(0xff141922);
+
   static ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
       color: primaryLight,
-      elevation: 0,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: primaryLight,
@@ -50,6 +50,53 @@ class MyTheme{
         fontSize: 18,
         fontWeight: FontWeight.bold,
         color: blackColor,
+      ),
+    ),
+  );
+
+  static ThemeData darkTheme = ThemeData(
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: darkBlackColor
+    ),
+    appBarTheme: AppBarTheme(
+      color: primaryLight,
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      selectedItemColor: primaryLight,
+      unselectedItemColor: greyColor,
+      showUnselectedLabels: false,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: primaryLight,
+    ),
+    primaryColor: primaryLight,
+    scaffoldBackgroundColor: backgroundDark,
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: darkBlackColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+        ),
+      ),
+    ),
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: whiteColor,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: whiteColor,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: whiteColor,
       ),
     ),
   );
