@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/home/home_screen.dart';
+import 'package:flutter_todo_app/login/login_screen.dart';
 import 'package:flutter_todo_app/my_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_todo_app/providers/app_config_provider.dart';
+import 'package:flutter_todo_app/register/register_screen.dart';
 import 'package:flutter_todo_app/task_list/task_edit.dart';
 import 'package:provider/provider.dart';
 void main()async{
@@ -24,10 +26,12 @@ class MyApp extends StatelessWidget {
     var provider = Provider.of<AppConfigProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: HomeScreen.routeName,
+      initialRoute: LoginScreen.routeName,
       routes: {
         HomeScreen.routeName : (context) => HomeScreen(),
         TaskEdit.routeName : (context) => TaskEdit(),
+        LoginScreen.routeName : (context) => LoginScreen(),
+        RegisterScreen.routeName : (context) => RegisterScreen(),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
