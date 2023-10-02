@@ -22,7 +22,17 @@ class FirebaseUtils{
    return getTasksCollection().doc(task.id).delete();
   }
 
-  static Future<void> updateTaskFromFireStore(Task task){
-    return getTasksCollection().doc(task.id).update(task.toFireStore());
+  static Future<void> updateTaskFromFireStore(Task task)async{
+    DocumentReference<Task> taskDocRef = await FirebaseUtils.getTasksCollection().doc(task.id);
+    taskDocRef.update({'isDone': true});
+  }
+
+  static Future<void> editTaskFromFireStore(Task task)async{
+    DocumentReference<Task> taskDocRef = await FirebaseUtils.getTasksCollection().doc(task.id);
+    taskDocRef.update({
+      'title': task.title,
+      'description' :task.description,
+      'dateTime' : task.dateTime
+    });
   }
 }

@@ -29,6 +29,7 @@ class AppConfigProvider extends ChangeNotifier {
     return appTheme == ThemeMode.dark;
   }
 
+
   void getAllTasksFromFireStore() async {
     QuerySnapshot<Task> querySnapshot =
         await FirebaseUtils.getTasksCollection().get();
@@ -57,5 +58,12 @@ class AppConfigProvider extends ChangeNotifier {
   void setNewSelectedDate(DateTime newDate) {
     selectedDate = newDate;
     getAllTasksFromFireStore();
+  }
+
+  bool isDone(Task task) {
+    if (task.isDone == true) {
+      return true;
+    }
+    return false;
   }
 }

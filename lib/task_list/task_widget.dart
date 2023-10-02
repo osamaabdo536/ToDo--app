@@ -59,7 +59,10 @@ class TaskWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(task.title ?? '',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        style: provider.isDone(task) ? Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: MyTheme.greenLight,
+                        )
+                        : Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
@@ -73,13 +76,29 @@ class TaskWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 21,vertical: 7),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).primaryColor,
+
+              InkWell(
+                onTap: (){
+                  FirebaseUtils.updateTaskFromFireStore(task).timeout(Duration(milliseconds: 500),
+                    onTimeout: (){
+                      print(task.isDone);
+                      provider.getAllTasksFromFireStore();
+                    }
+                  );
+
+                },
+                child: provider.isDone(task) ? Text('Done !' ,style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: MyTheme.greenLight,
+                ),)
+                :
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 21,vertical: 7),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: Icon(Icons.check ,size: 35,color: MyTheme.whiteColor ),
                 ),
-                child: Icon(Icons.check ,size: 35,color: MyTheme.whiteColor ),
               ),
             ],
           ),
