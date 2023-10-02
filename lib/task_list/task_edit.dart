@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_app/firebase_utils.dart';
 import 'package:flutter_todo_app/my_theme.dart';
 import 'package:provider/provider.dart';
+import '../model/task.dart';
 import '../providers/app_config_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -13,6 +15,9 @@ class TaskEdit extends StatefulWidget {
 class _TaskEditState extends State<TaskEdit> {
   DateTime selectedDate = DateTime.now();
   var formKey = GlobalKey<FormState>();
+  var titleController = TextEditingController();
+  var descController = TextEditingController();
+  late Task task ;
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppConfigProvider>(context);
@@ -46,6 +51,7 @@ class _TaskEditState extends State<TaskEdit> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: titleController,
                   validator: (text){
                     if(text == null || text.isEmpty){
                       return AppLocalizations.of(context)!.enter_title;
@@ -65,6 +71,7 @@ class _TaskEditState extends State<TaskEdit> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: descController,
                   validator: (text){
                     if(text == null || text.isEmpty){
                       return AppLocalizations.of(context)!.enter_details;
@@ -100,6 +107,12 @@ class _TaskEditState extends State<TaskEdit> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: (){
+                  FirebaseUtils.editTaskFromFireStore(task).timeout(Duration(milliseconds: 500),
+                    onTimeout: (){
+                    task.title = titleController.text ;
+                    task.description = descController.text ;
+                    }
+                  );
                 },
                 child: Text(AppLocalizations.of(context)!.save_changes , style: Theme.of(context).textTheme.titleLarge,),
               ),
